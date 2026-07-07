@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/supervideo/db" VERSION="20230406" COMMENT="XMLDB file for supervideo module."
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd">
+    <TABLES>
+        <TABLE NAME="supervideo" COMMENT="Each record is a supervideo resource.">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+                <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="intro" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="origem" TYPE="char" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="videourl" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="ottflix_ia" TYPE="char" LENGTH="100" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="playersize" TYPE="char" LENGTH="15" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="showcontrols" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="autoplay" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="grade_approval" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="completionpercent" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="displaymode" TYPE="char" LENGTH="10" NOTNULL="false" DEFAULT="activity" SEQUENCE="false"
+                       COMMENT="How the activity is displayed: activity (own page) or course (embedded on the course page)."/>
+                <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="course" UNIQUE="false" FIELDS="course"/>
+                <INDEX NAME="playersize" UNIQUE="false" FIELDS="playersize"/>
+                <INDEX NAME="showcontrols" UNIQUE="false" FIELDS="showcontrols"/>
+                <INDEX NAME="autoplay" UNIQUE="false" FIELDS="autoplay"/>
+            </INDEXES>
+        </TABLE>
+        <TABLE NAME="supervideo_media" COMMENT="One audio/video media item, in one language, belonging to a supervideo activity.">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+                <FIELD NAME="supervideo" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"
+                       COMMENT="Foreign key to supervideo.id"/>
+                <FIELD NAME="mediatype" TYPE="char" LENGTH="10" NOTNULL="true" DEFAULT="video" SEQUENCE="false"
+                       COMMENT="video or audio"/>
+                <FIELD NAME="sourcetype" TYPE="char" LENGTH="10" NOTNULL="true" DEFAULT="upload" SEQUENCE="false"
+                       COMMENT="upload, url or embed"/>
+                <FIELD NAME="externalurl" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="embedcode" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="lang" TYPE="char" LENGTH="30" NOTNULL="false" SEQUENCE="false"
+                       COMMENT="Moodle language code this media item is in, e.g. en, es, ja, ar."/>
+                <FIELD NAME="description" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="descriptionformat" TYPE="int" LENGTH="4" NOTNULL="false" DEFAULT="1" SEQUENCE="false"/>
+                <FIELD NAME="sortorder" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="0" SEQUENCE="false"/>
+                <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="supervideo" UNIQUE="false" FIELDS="supervideo"/>
+                <INDEX NAME="lang" UNIQUE="false" FIELDS="lang"/>
+                <INDEX NAME="supervideo_lang" UNIQUE="false" FIELDS="supervideo, lang"/>
+            </INDEXES>
+        </TABLE>
+        <TABLE NAME="supervideo_view" COMMENT="Save student Video views (Youtube/Vimeo/Google Drive/Upload).">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+                <FIELD NAME="cm_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="user_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="currenttime" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="duration" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="percent" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="map" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="cm_id" UNIQUE="false" FIELDS="cm_id"/>
+                <INDEX NAME="user_id" UNIQUE="false" FIELDS="user_id"/>
+            </INDEXES>
+        </TABLE>
+    </TABLES>
+</XMLDB>
